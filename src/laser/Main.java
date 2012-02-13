@@ -1,5 +1,5 @@
 package laser;
-
+/*
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InterruptedIOException;
@@ -61,10 +61,6 @@ public class Main {
 			
 			stlfr.close();
 			
-			//for (int i = 0; i < stlTriangles.length; i++) {
-			//	System.out.println(stlTriangles[i].m01);
-			//}
-			
 			Slicer slicer = new Slicer(stlTriangles);
 			
 			ArrayList<Line2D> slicedData = slicer.getListOfLines();
@@ -88,3 +84,4 @@ public class Main {
 		}
 	}
 }
+*/
