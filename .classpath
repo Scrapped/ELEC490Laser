@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="/home/bryce/gitrepos/ELEC490Laser/vecmath.jar"/>
+	<classpathentry kind="lib" path="/home/bryce/gitrepos/ELEC490Laser/j3d-org-java3d-all.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
