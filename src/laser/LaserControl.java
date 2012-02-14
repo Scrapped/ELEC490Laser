@@ -126,7 +126,6 @@ public class LaserControl extends JFrame{
 			public void change() {
 				try{
 					data.setLaserPower(Integer.parseInt(textField_power.getText()));
-					System.out.println(data.getLaserPower());
 				}
 				catch (NumberFormatException error) {}
 			}
@@ -144,7 +143,6 @@ public class LaserControl extends JFrame{
 			public void change() {
 				try{
 					data.setXOffset(Double.parseDouble(textField_xoff.getText()));
-					System.out.println(data.getXOffset());
 				}
 				catch (NumberFormatException error) {}
 			}
@@ -162,7 +160,6 @@ public class LaserControl extends JFrame{
 			public void change() {
 				try{
 					data.setYOffset(Double.parseDouble(textField_yoff.getText()));
-					System.out.println(data.getYOffset());
 				}
 				catch (NumberFormatException error) {}
 			}
@@ -239,7 +236,7 @@ public class LaserControl extends JFrame{
 						STLFileReader stlfr = new STLFileReader(file);
 						
 						int numObj = stlfr.getNumOfObjects();
-						int[] numFacets = stlfr.getNumOfFacets();
+						int[] numFacets = stlfr.getNumOfFacets();;
 						
 						// Break down the 3D object into it's individual triangles
 						for (int i = 0; i < numObj; i++) {
@@ -258,9 +255,9 @@ public class LaserControl extends JFrame{
 								// Store the data in a matrix and set the Z value for
 								// every point to 50mm
 								stlTriangles[j] = new Matrix3d(facet[0][0],
-										facet[0][1], 50.0, facet[1][0],
-										facet[1][1], 50.0, facet[2][0],
-										facet[2][1], 50.0);
+										facet[0][1], data.getFocalDistance(), facet[1][0],
+										facet[1][1], data.getFocalDistance(), facet[2][0],
+										facet[2][1], data.getFocalDistance());
 							}
 						}
 						

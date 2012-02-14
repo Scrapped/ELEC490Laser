@@ -1,8 +1,6 @@
 package laser;
 
 import javax.vecmath.*;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 
 public class Slicer {
@@ -31,8 +29,8 @@ public class Slicer {
 	public Slicer (Matrix3d[] obj) {
 		
 		points = new ArrayList<ValidCoords>();
-		xMax = 0;
-		yMax = 0;
+		xMax = -1000;
+		yMax = -1000;
 		xMin = 1000; // Magic number (honestly, if you're trying to print a 1 meter wide object you're doing it wrong)
 		yMin = 1000; // Magic number
 		
@@ -51,29 +49,16 @@ public class Slicer {
 	 */
 	private void findLimits() {
 		
-		BigDecimal max;
-		BigDecimal min;
-		
 		// Find the top and bottom of the object
 		for (int i = 0; i < object.length; i++) {
 			
 			// Find the greatest Y value in the object
 			tempYMax = Math.max(object[i].m01, object[i].m11);
 			tempYMax = Math.max(object[i].m21, tempYMax);
-			max = new BigDecimal(tempYMax);
-			
-			// Round to the nearest half millimeter
-			max.setScale(1, RoundingMode.HALF_EVEN);
-			tempYMax = max.doubleValue();
 			
 			// Find the lowest Y value in the object
 			tempYMin = Math.min(object[i].m01, object[i].m11);
 			tempYMin = Math.min(object[i].m21, tempYMin);
-			min = new BigDecimal(tempYMin);
-			
-			// Round to the nearest half millimeter
-			min.setScale(1, RoundingMode.HALF_EVEN);
-			tempYMin = min.doubleValue();
 			
 			if (tempYMax > yMax) { yMax = tempYMax; }
 			if (tempYMin < yMin) { yMin = tempYMin; }
@@ -81,26 +66,18 @@ public class Slicer {
 			//Find the greatest X value in the object
 			tempXMax = Math.max(object[i].m00, object[i].m10);
 			tempXMax = Math.max(object[i].m20, tempXMax);
-			max = new BigDecimal(tempXMax);
-			
-			// Round to the nearest half millimeter
-			max.setScale(1, RoundingMode.HALF_EVEN);
-			tempXMax = max.doubleValue();
 			
 			//Find the lowest X value in the object
 			tempXMin = Math.max(object[i].m00, object[i].m10);
 			tempXMin = Math.max(object[i].m20, tempXMin);
-			min = new BigDecimal(tempXMin);
-			
-			// Round to the nearest half millimeter
-			min.setScale(1, RoundingMode.HALF_EVEN);
-			tempXMin = min.doubleValue();
 			
 			if (tempXMax > xMax) { xMax = tempXMax; }
 			if (tempXMin < xMin) { xMin = tempXMin; }
+			
 		}
 		
-		xMax = xMax + 0.5;
+		// Add a bit to the end in case the object has a straight line from top to bottom
+		xMax = xMax + resolution;
 	}
 	
 	/**
@@ -110,18 +87,17 @@ public class Slicer {
 	 */
 	private void createListOfPoints() {
 		
-		
-		boolean validPoint = false;
+		boolean validPoint = true;
 		
 		// Yes it's nasty, it's a rough draft
-		for (double i = yMax; i >= yMin; i = i - 0.5) {
-			for (double j = xMin; j <= xMax; j = j + 0.5) {
+		for (double i = yMax; i >= yMin; i = i - resolution) {
+			for (double j = xMin; j <= xMax; j = j + resolution) {
 				for (int k = 0; k < object.length; k++) {
 					
 					// Determine XY lengths for normalizing
 					double xLength = xMax - xMin;
 					double yLength = yMax - yMin;
-					validPoint = false;
+					validPoint = true;
 					
 					a = new Point2d(object[k].m00/xLength, object[k].m01/yLength);
 					b = new Point2d(object[k].m10/xLength, object[k].m11/yLength);
@@ -151,10 +127,13 @@ public class Slicer {
 					//too far in a direction and are outside the triangle. Finally if u + v > 1 
 					//then we've crossed the edge BC again leaving the triangle.
 					if (v > 0 && u > 0 && v < 1 && u < 1 && (u + v) < 1) {
-						validPoint = true;
+						validPoint = false;
 						break;
 					}
 				}
+				
+				//double xCoord = j-xMin;
+				//double yCoord = i-yMin;
 				points.add(new ValidCoords(j,i,validPoint));
 			}
 		}
@@ -184,7 +163,7 @@ public class Slicer {
 				
 				coordinates[0][0] = startPoint.getXValue();
 				coordinates[0][1] = startPoint.getYValue();
-				coordinates[1][0] = (currentPoint.getXValue() - 0.5);
+				coordinates[1][0] = (currentPoint.getXValue() - resolution);
 				coordinates[1][1] = currentPoint.getYValue();
 				lines.add(new Line2D(coordinates, laserSetting));
 				

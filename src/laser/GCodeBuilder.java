@@ -1,5 +1,6 @@
 package laser;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class GCodeBuilder {
@@ -25,14 +26,17 @@ public class GCodeBuilder {
 		gcode.add("G1 Z"
 				+ (settings.getFocalDistance()
 				+ settings.getObjHeight())
-				+ "F50.0");					//Move up to Z20+objHeight mm at 50mm/minute rate
+				+ " F50.0");					//Move up to Z20+objHeight mm at 50mm/minute rate
 		gcode.add("G1 X0.0 Y0.0 F" + settings.getXYSpeed() + ".0");	//Set XY movement rate to 2500mm/minute
 	}
 	
 	private void determineMovement(ArrayList<Line2D> lines) {
 		
-		 double xVal = lines.get(0).getStart()[0] + settings.getXOffset();
-		 double yVal = lines.get(0).getStart()[1] + settings.getYOffset();
+		DecimalFormat deciForm = new DecimalFormat();
+		deciForm.setMaximumFractionDigits(3);
+		
+		double xVal = lines.get(0).getStart()[0] + settings.getXOffset();
+		double yVal = lines.get(0).getStart()[1] + settings.getYOffset();
 		
 		// Move to the starting point
 		gcode.add("G1 X" + xVal
@@ -51,8 +55,8 @@ public class GCodeBuilder {
 			// Linear interpolation
 			xVal = lines.get(i).getStart()[0] + settings.getXOffset();
 			yVal = lines.get(i).getStart()[1] + settings.getYOffset();
-			gcode.add("G1 X" + xVal
-					+ " Y" + yVal);
+			gcode.add("G1 X" + deciForm.format(xVal)
+					+ " Y" + deciForm.format(yVal));
 		}
 		
 		gcode.add("M490 P0");

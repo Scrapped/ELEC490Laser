@@ -12,11 +12,11 @@ public class Properties {
 	
 	public Properties() {
 		
-		focalDist = 20.0;
+		focalDist = 5.0;
 		xOffset = 0.0;
 		yOffset = 0.0;
 		objHeight = 0;
-		xySpeed = 2500;
+		xySpeed = 3000;
 		laserPower = 100;
 	}
 	
