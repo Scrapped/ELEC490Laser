@@ -15,7 +15,7 @@ public class Slicer {
 	private double tempXMin;
 	private double tempYMax;
 	private double tempYMin;
-	private final double resolution = 0.5; // Distance between points in millimeters
+	private double resolution; // Distance between points in millimeters
 	
 	private Point2d a;
 	private Point2d b;
@@ -26,8 +26,9 @@ public class Slicer {
 	private ArrayList<ValidCoords> points;
 	private ArrayList<Line2D> lines;
 	
-	public Slicer (Matrix3d[] obj) {
+	public Slicer (Matrix3d[] obj, double newRes) {
 		
+		resolution = newRes;
 		points = new ArrayList<ValidCoords>();
 		xMax = -1000;
 		yMax = -1000;

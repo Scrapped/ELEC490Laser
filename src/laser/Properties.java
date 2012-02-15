@@ -6,12 +6,14 @@ public class Properties {
 	private static double xOffset;
 	private static double yOffset;
 	private static double objHeight;
+	private static double resolution;
 	
 	private static int xySpeed;
 	private static int laserPower;
 	
 	public Properties() {
 		
+		resolution = 0.5;
 		focalDist = 5.0;
 		xOffset = 0.0;
 		yOffset = 0.0;
@@ -24,6 +26,7 @@ public class Properties {
 	public double getXOffset() { return xOffset; }
 	public double getYOffset() { return yOffset; }
 	public double getObjHeight() { return objHeight; }
+	public double getResolution() {return resolution; }
 	public int getXYSpeed() { return xySpeed; }
 	public int getLaserPower() { return laserPower; }
 	
@@ -31,6 +34,7 @@ public class Properties {
 	public void setXOffset(double newOffset) { xOffset = newOffset; }
 	public void setYOffset(double newOffset) { yOffset = newOffset; }
 	public void setObjHeight(double newHeight) { objHeight = newHeight; }
+	public void setResolution(double newRes) { resolution = newRes; }
 	public void setXYSpeed(int newSpeed) { xySpeed = newSpeed; }
 	public void setLaserPower(int newPower) {
 		

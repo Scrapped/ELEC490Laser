@@ -26,7 +26,7 @@ public class GCodeBuilder {
 		gcode.add("G1 Z"
 				+ (settings.getFocalDistance()
 				+ settings.getObjHeight())
-				+ " F50.0");					//Move up to Z20+objHeight mm at 50mm/minute rate
+				+ " F50.0");					//Move up to laserHeigher+objHeight at 50mm/minute rate
 		gcode.add("G1 X0.0 Y0.0 F" + settings.getXYSpeed() + ".0");	//Set XY movement rate to 2500mm/minute
 	}
 	
