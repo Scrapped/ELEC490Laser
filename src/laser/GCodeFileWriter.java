@@ -7,6 +7,13 @@ import java.util.ArrayList;
 
 public class GCodeFileWriter {
 
+	/**
+	 * Takes the gcode data and writes it out into a (filename).gcode file
+	 * where filename comes from the JFileChooser dialogue box.
+	 * 
+	 * @param gcode The complete gcode data
+	 * @param newFile The file being written to
+	 */
 	public GCodeFileWriter (ArrayList<String> gcode, File newFile){
 		
 		try {

@@ -15,7 +15,7 @@ public class Slicer {
 	private double tempXMin;
 	private double tempYMax;
 	private double tempYMin;
-	private double resolution; // Distance between points in millimeters
+	private double resolution; // Distance between points in millimetres
 	
 	private Point2d a;
 	private Point2d b;
@@ -30,8 +30,8 @@ public class Slicer {
 		
 		resolution = newRes;
 		points = new ArrayList<ValidCoords>();
-		xMax = -1000;
-		yMax = -1000;
+		xMax = -1000; // Magic number
+		yMax = -1000; // Magic number
 		xMin = 1000; // Magic number (honestly, if you're trying to print a 1 meter wide object you're doing it wrong)
 		yMin = 1000; // Magic number
 		
